@@ -130,6 +130,10 @@ class Application(object):
             '--force', action='store_true',
             help='Force rebuild of images even when required image exists')
         parser.add_argument(
+            '--build-in-ram', action='store_true',
+            help='Build the image in RAM so that it is faster, requires '
+            'free RAM about the size of disk image')
+        parser.add_argument(
             'targets', nargs='+', help='Image targets to build')
 
         self.arguments = parser.parse_args()
