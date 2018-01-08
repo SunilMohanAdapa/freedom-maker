@@ -98,11 +98,13 @@ class ImageBuilder(object):  # pylint: disable=too-many-instance-attributes
 
     def cleanup(self):
         """Finalize tasks."""
-        logger.removeHandler(self.log_handler)
+        logger.info('Cleaning up')
         if self.ram_directory:
             self._run(['sudo', 'umount', self.ram_directory.name])
             self.ram_directory.cleanup()
             self.ram_directory = None
+
+        logger.removeHandler(self.log_handler)
 
     def build(self):
         """Run the image building process."""

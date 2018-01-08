@@ -71,10 +71,14 @@ class Application(object):
 
             builder = cls(self.arguments)
             self.setup_logging(builder.log_file)
-            builder.build()
-            builder.cleanup()
-
-            logger.info('Target complete - %s', target)
+            try:
+                builder.build()
+                logger.info('Target complete - %s', target)
+            except:
+                logger.error('Target failed - %s', target)
+                raise
+            finally:
+                builder.cleanup()
 
     def parse_arguments(self):
         """Parse command line arguments."""
