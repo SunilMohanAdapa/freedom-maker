@@ -100,7 +100,7 @@ class ImageBuilder(object):  # pylint: disable=too-many-instance-attributes
         """Finalize tasks."""
         logger.removeHandler(self.log_handler)
         if self.ram_directory:
-            self._run(['umount', self.ram_directory.name])
+            self._run(['sudo', 'umount', self.ram_directory.name])
             self.ram_directory.cleanup()
             self.ram_directory = None
 
@@ -147,7 +147,8 @@ class ImageBuilder(object):  # pylint: disable=too-many-instance-attributes
             return self.image_file + '.temp'
 
         self.ram_directory = tempfile.TemporaryDirectory()
-        self._run(['mount', '-t', 'tmpfs', 'tmpfs', self.ram_directory.name])
+        self._run(
+            ['sudo', 'mount', '-t', 'tmpfs', 'tmpfs', self.ram_directory.name])
         return os.path.join(self.ram_directory.name,
                             os.path.basename(self.image_file))
 
